@@ -13,5 +13,13 @@ CREATE TABLE test (
 	name VARCHAR ( 50 ) UNIQUE NOT NULL,
 );
 
+
 INSERT INTO test (name) VALUES ('test1');
 INSERT INTO test (name) VALUES ('test2');
+
+CREATE TABLE users (
+  id serial PRIMARY KEY,
+  full_name VARCHAR ( 60 ) NOT NULL,
+  password VARCHAR (64) NOT NULL,
+  phone_number VARCHAR ( 15 ) UNIQUE NOT NULL,
+);

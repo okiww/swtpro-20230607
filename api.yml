@@ -31,7 +31,7 @@ paths:
         '200':
           description: Test return
           content:
-            application/json:    
+            application/json:
               schema:
                 $ref: "#/components/schemas/HelloResponse"
         '404':
@@ -40,6 +40,36 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /register:
+    post:
+      summary: This is endpoint for register
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterPayload'
+      responses:
+        '200':
+          description: PostRegisterResponse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                invalidPhoneNumber:
+                  value:
+                    message: "Invalid phone number. Please provide a valid Indonesian phone number starting with '+62'."
+                invalidPassword:
+                  value:
+                    message: "Invalid password. Please provide a password with at least 6 characters, including 1 capital letter, 1 number, and 1 special character."
+                invalidFullName:
+                  value:
+                    message: "Invalid full name. Please provide a valid full name."
 components:
   schemas:
     HelloResponse:
@@ -56,3 +86,27 @@ components:
       properties:
         message:
           type: string
+    RegisterPayload:
+      type: object
+      required:
+        - phone_number
+        - password
+        - full_name
+      properties:
+        phone_number:
+          type: string
+        password:
+          type: string
+          format: password
+        full_name:
+          type: string
+    RegisterResponse:
+      type: object
+      required:
+        - message
+        - id
+      properties:
+        message:
+          type: string
+        id:
+          type: integer

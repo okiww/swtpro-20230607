@@ -8,4 +8,6 @@ import "context"
 
 type RepositoryInterface interface {
 	GetTestById(ctx context.Context, input GetTestByIdInput) (output GetTestByIdOutput, err error)
+	GetUserByPhoneNumber(ctx context.Context, phoneNumber string) (output *GetUserByPhoneNumberOutput, err error)
+	CreateUserInput(ctx context.Context, input *CreateUserInput) (int, error)
 }

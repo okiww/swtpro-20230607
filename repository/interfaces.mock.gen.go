@@ -34,6 +34,21 @@ func (m *MockRepositoryInterface) EXPECT() *MockRepositoryInterfaceMockRecorder 
 	return m.recorder
 }
 
+// CreateUserInput mocks base method.
+func (m *MockRepositoryInterface) CreateUserInput(ctx context.Context, input *CreateUserInput) (int, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateUserInput", ctx, input)
+	ret0, _ := ret[0].(int)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateUserInput indicates an expected call of CreateUserInput.
+func (mr *MockRepositoryInterfaceMockRecorder) CreateUserInput(ctx, input interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUserInput", reflect.TypeOf((*MockRepositoryInterface)(nil).CreateUserInput), ctx, input)
+}
+
 // GetTestById mocks base method.
 func (m *MockRepositoryInterface) GetTestById(ctx context.Context, input GetTestByIdInput) (GetTestByIdOutput, error) {
 	m.ctrl.T.Helper()

@@ -8,3 +8,15 @@ type GetTestByIdInput struct {
 type GetTestByIdOutput struct {
 	Name string
 }
+
+type CreateUserInput struct {
+	FullName    string
+	Password    string
+	PhoneNumber string
+}
+
+type GetUserByPhoneNumberOutput struct {
+	Id          int
+	FullName    string
+	PhoneNumber string
+}
