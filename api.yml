@@ -70,6 +70,22 @@ paths:
                 invalidFullName:
                   value:
                     message: "Invalid full name. Please provide a valid full name."
+  /update:
+    post:
+      summary: This is endpoint for update
+      operationId: update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePayload'
+      responses:
+        '200':
+          description: UpdateResponse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateResponse'
 components:
   schemas:
     HelloResponse:
@@ -110,3 +126,31 @@ components:
           type: string
         id:
           type: integer
+    UpdatePayload:
+      type: object
+      required:
+        - phone_number
+        - full_name
+      properties:
+        phone_number:
+          type: string
+        full_name:
+          type: string
+    UpdateResponse:
+      type: object
+      required:
+        - message
+        - data
+      properties:
+        message:
+          type: string
+        data:
+          type: object
+          required:
+            - phone_number
+            - full_name
+          properties:
+            phone_number:
+              type: string
+            full_name:
+              type: string

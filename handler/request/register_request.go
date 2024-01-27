@@ -8,18 +8,6 @@ import (
 	"regexp"
 )
 
-const (
-	PHONE_NUMBER_RULES_MIN_LENGTH = 10
-	PHONE_NUMBER_RULES_MAX_LENGTH = 14
-	PHONE_NUMBER_RULES_PATTERN    = `^\+62[0-9]+$`
-
-	PASSWORD_RULES_MIN_LENGTH = 6
-	PASSWORD_RULES_MAX_LENGTH = 64
-
-	FULLNAME_RULES_MIN_LENGTH = 3
-	FULLNAME_RULES_MAX_LENGTH = 60
-)
-
 func ValidateRegisterPayload(payload *generated.RegisterPayload) error {
 	if payload.PhoneNumber == "" {
 		return errors.New("phone_number cannot be empty")

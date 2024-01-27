@@ -60,3 +60,38 @@ func (s *Server) Register(ctx echo.Context) error {
 		Id:      id,
 	})
 }
+
+func (s *Server) Update(ctx echo.Context) error {
+	var payload generated.UpdatePayload
+	if err := ctx.Bind(&payload); err != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid request body"})
+	}
+
+	// extract JWT to get id
+
+	err := request.ValidateUpdatePayload(&payload)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": fmt.Sprintf("%s", err.Error())})
+	}
+
+	existingUser, err := s.Repository.GetUserByPhoneNumber(ctx.Request().Context(), payload.PhoneNumber)
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, map[string]string{"error": "Internal Server Error"})
+	}
+
+	if existingUser != nil {
+		return ctx.JSON(http.StatusConflict, map[string]string{"error": "phone number already registered"})
+	}
+
+	data, err := s.Repository.UpdateUserById(ctx.Request().Context(), &repository.UpdateUserByIdInput{
+		FullName:    payload.FullName,
+		PhoneNumber: payload.PhoneNumber,
+	}, 3)
+
+	var resp generated.UpdateResponse
+	resp.Message = "success update"
+	resp.Data.FullName = data.FullName
+	resp.Data.PhoneNumber = data.PhoneNumber
+
+	return ctx.JSON(http.StatusOK, resp)
+}

@@ -41,3 +41,15 @@ func (r *Repository) CreateUserInput(ctx context.Context, input *CreateUserInput
 
 	return id, nil
 }
+
+func (r *Repository) UpdateUserById(ctx context.Context, input *UpdateUserByIdInput, id int) (*UpdateUserByIdOutput, error) {
+	var output UpdateUserByIdOutput
+
+	err := r.Db.QueryRowContext(ctx, "UPDATE users SET full_name = $1 and phone_number = $2 where id = $3",
+		input.FullName, input.PhoneNumber, id).Scan(&output.Id, &output.FullName, &output.PhoneNumber)
+	if err != nil {
+		return nil, err
+	}
+
+	return &output, nil
+}
