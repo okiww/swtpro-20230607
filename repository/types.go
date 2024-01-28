@@ -18,6 +18,7 @@ type CreateUserInput struct {
 type GetUserByPhoneNumberOutput struct {
 	Id          int
 	FullName    string
+	Password    string
 	PhoneNumber string
 }
 

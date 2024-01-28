@@ -70,6 +70,22 @@ paths:
                 invalidFullName:
                   value:
                     message: "Invalid full name. Please provide a valid full name."
+  /login:
+    post:
+      summary: This is endpoint for login
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginPayload'
+      responses:
+        '200':
+          description: LoginResponse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
   /update:
     put:
       summary: This is endpoint for update
@@ -90,6 +106,8 @@ paths:
     get:
       summary: This is endpoint for get profile
       operationId: profile
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: ProfileResponse
@@ -137,6 +155,24 @@ components:
           type: string
         id:
           type: integer
+    LoginPayload:
+      type: object
+      required:
+        - phone_number
+        - password
+      properties:
+        phone_number:
+          type: string
+        password:
+          type: string
+          format: password
+    LoginResponse:
+      type: object
+      required:
+        - access_token
+      properties:
+        access_token:
+          type: string
     UpdatePayload:
       type: object
       required:

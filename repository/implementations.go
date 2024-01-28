@@ -16,8 +16,8 @@ func (r *Repository) GetTestById(ctx context.Context, input GetTestByIdInput) (o
 func (r *Repository) GetUserByPhoneNumber(ctx context.Context, phoneNumber string) (*GetUserByPhoneNumberOutput, error) {
 	var output GetUserByPhoneNumberOutput
 
-	err := r.Db.QueryRowContext(ctx, "SELECT id, full_name, phone_number FROM users WHERE phone_number = $1", phoneNumber).
-		Scan(&output.Id, &output.FullName, &output.PhoneNumber)
+	err := r.Db.QueryRowContext(ctx, "SELECT id, full_name, phone_number, password FROM users WHERE phone_number = $1", phoneNumber).
+		Scan(&output.Id, &output.FullName, &output.PhoneNumber, &output.Password)
 
 	if err == sql.ErrNoRows {
 		// Handle the case when the user is not found
