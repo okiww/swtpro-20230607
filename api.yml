@@ -71,7 +71,7 @@ paths:
                   value:
                     message: "Invalid full name. Please provide a valid full name."
   /update:
-    post:
+    put:
       summary: This is endpoint for update
       operationId: update
       requestBody:
@@ -86,6 +86,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UpdateResponse'
+  /profile:
+    get:
+      summary: This is endpoint for get profile
+      operationId: profile
+      responses:
+        '200':
+          description: ProfileResponse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
 components:
   schemas:
     HelloResponse:
@@ -154,3 +165,13 @@ components:
               type: string
             full_name:
               type: string
+    ProfileResponse:
+      type: object
+      required:
+        - phone_number
+        - full_name
+      properties:
+        phone_number:
+          type: string
+        full_name:
+          type: string

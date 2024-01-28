@@ -64,6 +64,21 @@ func (mr *MockRepositoryInterfaceMockRecorder) GetTestById(ctx, input interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTestById", reflect.TypeOf((*MockRepositoryInterface)(nil).GetTestById), ctx, input)
 }
 
+// GetUserById mocks base method.
+func (m *MockRepositoryInterface) GetUserById(ctx context.Context, id int) (*User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserById", ctx, id)
+	ret0, _ := ret[0].(*User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserById indicates an expected call of GetUserById.
+func (mr *MockRepositoryInterfaceMockRecorder) GetUserById(ctx, id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserById", reflect.TypeOf((*MockRepositoryInterface)(nil).GetUserById), ctx, id)
+}
+
 // GetUserByPhoneNumber mocks base method.
 func (m *MockRepositoryInterface) GetUserByPhoneNumber(ctx context.Context, phoneNumber string) (*GetUserByPhoneNumberOutput, error) {
 	m.ctrl.T.Helper()
@@ -77,4 +92,19 @@ func (m *MockRepositoryInterface) GetUserByPhoneNumber(ctx context.Context, phon
 func (mr *MockRepositoryInterfaceMockRecorder) GetUserByPhoneNumber(ctx, phoneNumber interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByPhoneNumber", reflect.TypeOf((*MockRepositoryInterface)(nil).GetUserByPhoneNumber), ctx, phoneNumber)
+}
+
+// UpdateUserById mocks base method.
+func (m *MockRepositoryInterface) UpdateUserById(ctx context.Context, input *UpdateUserByIdInput, id int) (*UpdateUserByIdOutput, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateUserById", ctx, input, id)
+	ret0, _ := ret[0].(*UpdateUserByIdOutput)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateUserById indicates an expected call of UpdateUserById.
+func (mr *MockRepositoryInterfaceMockRecorder) UpdateUserById(ctx, input, id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateUserById", reflect.TypeOf((*MockRepositoryInterface)(nil).UpdateUserById), ctx, input, id)
 }

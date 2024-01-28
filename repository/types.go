@@ -21,6 +21,11 @@ type GetUserByPhoneNumberOutput struct {
 	PhoneNumber string
 }
 
+type User struct {
+	FullName    string
+	PhoneNumber string
+}
+
 type UpdateUserByIdInput struct {
 	FullName    string
 	PhoneNumber string

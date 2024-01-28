@@ -79,14 +79,14 @@ func (s *Server) Update(ctx echo.Context) error {
 		return ctx.JSON(http.StatusInternalServerError, map[string]string{"error": "Internal Server Error"})
 	}
 
-	if existingUser != nil {
+	if existingUser != nil && existingUser.Id != 6 {
 		return ctx.JSON(http.StatusConflict, map[string]string{"error": "phone number already registered"})
 	}
 
 	data, err := s.Repository.UpdateUserById(ctx.Request().Context(), &repository.UpdateUserByIdInput{
 		FullName:    payload.FullName,
 		PhoneNumber: payload.PhoneNumber,
-	}, 3)
+	}, 6)
 
 	var resp generated.UpdateResponse
 	resp.Message = "success update"
@@ -94,4 +94,22 @@ func (s *Server) Update(ctx echo.Context) error {
 	resp.Data.PhoneNumber = data.PhoneNumber
 
 	return ctx.JSON(http.StatusOK, resp)
+}
+
+func (s *Server) Profile(ctx echo.Context) error {
+	// extract JWT
+
+	existingUser, err := s.Repository.GetUserById(ctx.Request().Context(), 6)
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, map[string]string{"error": "Internal Server Error"})
+	}
+
+	if existingUser == nil {
+		return ctx.JSON(http.StatusNotFound, map[string]string{"error": "User Not Found"})
+	}
+
+	return ctx.JSON(http.StatusOK, generated.ProfileResponse{
+		FullName:    existingUser.FullName,
+		PhoneNumber: existingUser.PhoneNumber,
+	})
 }
