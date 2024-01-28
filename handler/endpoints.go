@@ -98,6 +98,10 @@ func (s *Server) Login(ctx echo.Context) error {
 
 func (s *Server) Update(ctx echo.Context) error {
 	authHeader := ctx.Request().Header.Get("Authorization")
+	// Check if "Authorization" header is not set
+	if authHeader == "" {
+		return ctx.JSON(http.StatusUnauthorized, map[string]string{"error": "Authorization header not set"})
+	}
 	// Remove "Bearer " prefix
 	tokenString := authHeader[7:]
 
@@ -109,6 +113,7 @@ func (s *Server) Update(ctx echo.Context) error {
 
 	var payload generated.UpdatePayload
 	if err := ctx.Bind(&payload); err != nil {
+		fmt.Println(err.Error())
 		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid request body"})
 	}
 
@@ -116,7 +121,6 @@ func (s *Server) Update(ctx echo.Context) error {
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, map[string]string{"error": fmt.Sprintf("%s", err.Error())})
 	}
-
 	existingUser, err := s.Repository.GetUserByPhoneNumber(ctx.Request().Context(), payload.PhoneNumber)
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, map[string]string{"error": "Internal Server Error"})
@@ -141,9 +145,12 @@ func (s *Server) Update(ctx echo.Context) error {
 
 func (s *Server) Profile(ctx echo.Context) error {
 	authHeader := ctx.Request().Header.Get("Authorization")
+	// Check if "Authorization" header is not set
+	if authHeader == "" {
+		return ctx.JSON(http.StatusUnauthorized, map[string]string{"error": "Authorization header not set"})
+	}
 	// Remove "Bearer " prefix
 	tokenString := authHeader[7:]
-
 	// Validate the access token
 	claims, err := request.ValidateAccessToken(tokenString)
 	if err != nil {
